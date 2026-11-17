@@ -39,6 +39,8 @@ def build_narration(data):
         if not script:  # 대본이 없으면 화면용 글로 대체
             script = " ".join([it.get("summary", "")] + list(it.get("points", [])[:3]) + [it.get("context", "")])
         parts.append(f"{o} 번째 소식입니다. {script}")
+    if data.get("closing"):  # 주간판: 다음 주 볼 일정 등 마무리 멘트(화면에는 나오지 않음)
+        parts.append(str(data["closing"]))
     parts.append("이상 이번 주 뉴스 브리핑이었습니다." if weekly else "이상 아침 뉴스 브리핑이었습니다.")
     return [re.sub(r"\s+", " ", p).strip() for p in parts if p and p.strip()]
 
