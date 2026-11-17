@@ -10,7 +10,7 @@ import json, os, sys, re, time, datetime, pathlib, subprocess, wave
 MODELS = [m.strip() for m in os.environ.get(
     "GEMINI_TTS_MODELS",
     "gemini-3.1-flash-tts-preview,gemini-2.5-flash-preview-tts").split(",") if m.strip()]
-VOICE = os.environ.get("GEMINI_VOICE", "Zephyr")
+VOICE = os.environ.get("GEMINI_VOICE") or "Zephyr"
 SR = 24000  # Gemini TTS 출력: 24kHz, 16bit, mono PCM
 ORD = ["첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열"]
 
@@ -91,6 +91,7 @@ def main():
     print(f"덩어리 {len(cs)}개")
     if dry:
         return
+    print(f"API 키 길이: {len(os.environ.get('GEMINI_API_KEY', ''))}자")
     from google import genai
     from google.genai import types
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
