@@ -2,7 +2,7 @@
 """news.json / weekly.json -> 음성 대본 -> Gemini TTS(API) -> mp3
 
 사용: python3 gemini_tts.py 입력.json 출력.mp3 [--dry]
-환경변수: GEMINI_API_KEY (필수, --dry 제외), GEMINI_VOICE (기본 Zephyr),
+환경변수: GEMINI_API_KEY (필수, --dry 제외), GEMINI_VOICE (기본 Erinome),
           GEMINI_TTS_MODELS (쉼표로 구분한 모델 우선순위)
 """
 import json, os, sys, re, time, datetime, pathlib, subprocess, wave
@@ -10,7 +10,7 @@ import json, os, sys, re, time, datetime, pathlib, subprocess, wave
 MODELS = [m.strip() for m in os.environ.get(
     "GEMINI_TTS_MODELS",
     "gemini-3.1-flash-tts-preview,gemini-2.5-flash-preview-tts").split(",") if m.strip()]
-VOICE = os.environ.get("GEMINI_VOICE") or "Zephyr"
+VOICE = os.environ.get("GEMINI_VOICE") or "Erinome"
 SR = 24000  # Gemini TTS 출력: 24kHz, 16bit, mono PCM
 ORD = ["첫", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열"]
 
