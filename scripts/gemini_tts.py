@@ -62,19 +62,30 @@ def chunks(paras, limit=1200):
     return out
 
 
-def tts_chunk(client, types, text, model):
-    cfg = types.GenerateContentConfig(
-        response_modalities=["AUDIO"],
-        speech_config=types.SpeechConfig(
-            voice_config=types.VoiceConfig(
-                prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name=VOICE))))
-    prompt = "다음 글을 차분하고 또렷한 아나운서 톤으로, 뉴스 브리핑처럼 읽어 주세요.\n\n" + text
-    resp = client.models.generate_content(model=model, contents=prompt, config=cfg)
-    for cand in resp.candidates or []:
-        for part in cand.content.parts or []:
-            if getattr(part, "inline_data", None) and part.inline_data.data:
-                return part.inline_data.data
-    raise RuntimeError("응답에 오디오가 없음")
+def tts_chunk(key, text, model):
+    """공식 REST(generateContent)로 직접 호출. 반환: PCM 바이트"""
+    import base64, urllib.request, urllib.error
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+    body = {
+        "contents": [{"parts": [{"text": "다음 글을 차분하고 또렷한 아나운서 톤으로, 뉴스 브리핑처럼 읽어 주세요.\n\n" + text}]}],
+        "generationConfig": {
+            "responseModalities": ["AUDIO"],
+            "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOICE}}},
+        },
+    }
+    req = urllib.request.Request(url, data=json.dumps(body).encode("utf-8"),
+                                 headers={"Content-Type": "application/json", "x-goog-api-key": key})
+    try:
+        with urllib.request.urlopen(req, timeout=300) as r:
+            resp = json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:300]}")
+    for cand in resp.get("candidates", []):
+        for part in cand.get("content", {}).get("parts", []):
+            inl = part.get("inlineData") or part.get("inline_data")
+            if inl and inl.get("data"):
+                return base64.b64decode(inl["data"])
+    raise RuntimeError("응답에 오디오가 없음: " + json.dumps(resp)[:300])
 
 
 def main():
@@ -91,10 +102,10 @@ def main():
     print(f"덩어리 {len(cs)}개")
     if dry:
         return
-    print(f"API 키 길이: {len(os.environ.get('GEMINI_API_KEY', ''))}자")
-    from google import genai
-    from google.genai import types
-    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    key = os.environ.get("GEMINI_API_KEY", "").strip()
+    print(f"API 키 길이: {len(key)}자")
+    if not key:
+        raise SystemExit("GEMINI_API_KEY 가 비어 있음")
 
     pcm_all = bytearray()
     used = None
@@ -106,14 +117,14 @@ def main():
         for model in order:
             for attempt in range(4):
                 try:
-                    pcm = tts_chunk(client, types, c, model)
+                    pcm = tts_chunk(key, c, model)
                     used = model
                     break
                 except Exception as e:  # 한도(429)·일시 오류 재시도
                     last_err = e
                     msg = str(e)
                     print(f"[{idx}/{len(cs)}] {model} 시도 {attempt+1} 실패: {msg[:200]}")
-                    time.sleep(30 if "429" in msg or "RESOURCE_EXHAUSTED" in msg else 8)
+                    time.sleep(30 if "429" in msg or "RESOURCE_EXHAUSTED" in msg or "HTTP 429" in msg else 8)
             if pcm:
                 break
         if not pcm:

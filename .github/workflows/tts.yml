@@ -50,7 +50,6 @@ jobs:
 
       - name: 의존성
         run: |
-          pip install -q google-genai
           which ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
 
       - name: 음성 생성
