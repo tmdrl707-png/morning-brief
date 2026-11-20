@@ -1,0 +1,32 @@
+대본 4422자, 문단 12개
+덩어리 4개
+API 키 길이: 53자
+[1/4] gemini-3.1-flash-tts-preview 시도 1 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[1/4] gemini-3.1-flash-tts-preview 시도 2 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[1/4] 완료 (gemini-3.1-flash-tts-preview), 누적 171초
+[2/4] gemini-3.1-flash-tts-preview 시도 1 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[2/4] gemini-3.1-flash-tts-preview 시도 2 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[2/4] 완료 (gemini-3.1-flash-tts-preview), 누적 338초
+[3/4] gemini-3.1-flash-tts-preview 시도 1 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[3/4] gemini-3.1-flash-tts-preview 시도 2 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[3/4] gemini-3.1-flash-tts-preview 시도 3 실패: HTTP 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE
+[3/4] 완료 (gemini-3.1-flash-tts-preview), 누적 492초
+[4/4] gemini-3.1-flash-tts-preview 시도 1 실패: HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.goo
+[4/4] gemini-3.1-flash-tts-preview 시도 2 실패: HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.goo
+[4/4] gemini-3.1-flash-tts-preview 시도 3 실패: HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.goo
+[4/4] gemini-3.1-flash-tts-preview 시도 4 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[4/4] 완료 (gemini-2.5-flash-preview-tts), 누적 614초
+완성: pub/2026-11-21.mp3 (10.2분, 모델 gemini-2.5-flash-preview-tts, 목소리 Erinome)
