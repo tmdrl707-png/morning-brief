@@ -1,0 +1,10 @@
+대본 2605자, 문단 15개
+덩어리 3개
+API 키 길이: 53자
+[1/3] gemini-3.1-flash-tts-preview 시도 1 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[1/3] gemini-3.1-flash-tts-preview 시도 2 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[1/3] gemini-3.1-flash-tts-preview 시도 3 실패: 응답에 오디오가 없음: {"candidates": [{"finishReason": "SAFETY", "index": 0, "finishMessage": "The audio stream could not be completed. Please retry your request, or try your request in unary mode if streaming
+[1/3] 완료 (gemini-3.1-flash-tts-preview), 누적 171초
+[2/3] 완료 (gemini-3.1-flash-tts-preview), 누적 342초
+[3/3] 완료 (gemini-3.1-flash-tts-preview), 누적 379초
+완성: pub/2026-11-28.mp3 (6.3분, 모델 gemini-3.1-flash-tts-preview, 목소리 Erinome)
